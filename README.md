@@ -47,7 +47,7 @@ let package = Package(
         .package(
             name: "Diffusion",
             url: "https://github.com/pushtechnology/diffusion-swift",
-            .exact("6.7.5")
+            .exact("6.8.0")
         ),
     ],
     //...
