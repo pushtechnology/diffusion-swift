@@ -1,6 +1,0 @@
-framework module Diffusion {
-  umbrella header "Diffusion.h"
-
-  export *
-  module * { export * }
-}
