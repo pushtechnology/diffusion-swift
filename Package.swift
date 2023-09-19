@@ -15,8 +15,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "Diffusion",
-            url: "https://github.com/diffusiondata/diffusion-sdk-apple/raw/6.8.6/Diffusion.xcframework.zip",
-            checksum: "fb0a24cb03c8734d5e1793532fe018de1b9e847aacb0908c1750bf9265bfb822"
+            url: "https://github.com/diffusiondata/diffusion-sdk-apple/raw/6.8.7/Diffusion.xcframework.zip",
+            checksum: "879a21dafe5b45037180641b09c57d06ea0f465617240d17817653f488835b09"
         )
     ]
 )
