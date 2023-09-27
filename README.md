@@ -20,12 +20,12 @@
 
 # Apple SDK for Diffusion - Swift Package
 
-#### Latest version: 6.9.0
+#### Latest version: 6.9.1
 
 #### Links
 - <a href="https://docs.diffusiondata.com/quickstart">Quick Start Guide</a>
-- <a href="https://docs.diffusiondata.com/docs/6.9.0/manual/html/developerguide/developerguide_overview.html">Developer Guide</a>
-- <a href="https://docs.diffusiondata.com/docs/6.9.0/apple">API Documentation</a>
+- <a href="https://docs.diffusiondata.com/docs/6.9.1/manual/html/developerguide/developerguide_overview.html">Developer Guide</a>
+- <a href="https://docs.diffusiondata.com/docs/6.9.1/apple">API Documentation</a>
 - <a href="https://github.com/diffusiondata/diffusion-examples/tree/6.9/apple">Examples</a>
 
 
@@ -47,7 +47,7 @@ let package = Package(
         .package(
             name: "Diffusion",
             url: "https://github.com/diffusiondata/diffusion-swift",
-            .exact("6.9.0")
+            .exact("6.9.1")
         ),
     ],
     //...
