@@ -6,17 +6,20 @@ import PackageDescription
 let package = Package(
     name: "Diffusion",
     products: [
+        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "Diffusion",
-            targets: [ "Diffusion" ]
-        ),
+            targets: ["Diffusion"]),
     ],
-    dependencies: [],
     targets: [
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
         .binaryTarget(
             name: "Diffusion",
-            url: "https://github.com/diffusiondata/diffusion-sdk-apple/raw/6.9.5/Diffusion.xcframework.zip",
-            checksum: "63db91c83407acedcb3ac637e839a7aee7d69c29b4ffe304259888456ea5b2b6"
-        )
+            path: "./Sources/Diffusion.xcframework"
+        ),
+        .testTarget(
+            name: "DiffusionTests",
+            dependencies: ["Diffusion"]),
     ]
 )
