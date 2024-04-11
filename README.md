@@ -1,5 +1,5 @@
 
-<img src="https://www.diffusiondata.com/wp-content/themes/diffusion/images/logo-tag.svg" style="width:250px;"/>
+<img src="https://docs.pushtechnology.com/docs/6.8.10/manual/html/lib/img/logos/push-new.png" style="width:250px;"/>
 
 <p/>
 
@@ -20,20 +20,20 @@
 
 # Apple SDK for Diffusion - Swift Package
 
-#### Latest version: 6.8.8
+#### Latest version: 6.8.10
 
 #### Links
-- <a href="https://docs.diffusiondata.com/quickstart">Quick Start Guide</a>
-- <a href="https://docs.diffusiondata.com/docs/6.8.8/manual/html/developerguide/developerguide_overview.html">Developer Guide</a>
-- <a href="https://docs.diffusiondata.com/docs/6.8.8/apple">API Documentation</a>
-- <a href="https://github.com/diffusiondata/diffusion-examples/tree/6.8/apple">Examples</a>
+- <a href="https://docs.pushtechnology.com/quickstart">Quick Start Guide</a>
+- <a href="https://docs.pushtechnology.com/docs/6.8.10/manual/html/developerguide/developerguide_overview.html">Developer Guide</a>
+- <a href="https://docs.pushtechnology.com/docs/6.8.10/apple">API Documentation</a>
+- <a href="https://github.com/pushtechnology/diffusion-examples/tree/6.8/apple">Examples</a>
 
 
 ## Installation
 
 ### Xcode Projects
 
-Select `File` -> `Swift Packages` -> `Add Package Dependency` and enter `https://github.com/diffusiondata/diffusion-swift`.
+Select `File` -> `Swift Packages` -> `Add Package Dependency` and enter `https://github.com/pushtechnology/diffusion-swift`.
 
 
 ### Swift Package Manager Projects
@@ -46,8 +46,8 @@ let package = Package(
     dependencies: [
         .package(
             name: "Diffusion",
-            url: "https://github.com/diffusiondata/diffusion-swift",
-            .exact("6.8.8")
+            url: "https://github.com/pushtechnology/diffusion-swift",
+            .exact("6.8.10")
         ),
     ],
     //...
@@ -59,4 +59,4 @@ Then simply `import Diffusion` wherever you’d like to use it.
 
 ### Requirements
 
-- Xcode 12.4+
+- Xcode 15.1+
