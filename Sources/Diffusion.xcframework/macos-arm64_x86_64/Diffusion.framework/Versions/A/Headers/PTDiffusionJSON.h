@@ -1,16 +1,16 @@
 //  Diffusion Client Library for iOS, tvOS and OS X / macOS
 //
-//  Copyright (c) 2016, 2021 Push Technology Ltd., All Rights Reserved.
+//  Copyright (c) 2016 - 2023 DiffusionData Ltd., All Rights Reserved.
 //
-//  Use is subject to license terms.
+//  Use is subject to licence terms.
 //
 //  NOTICE: All information contained herein is, and remains the
-//  property of Push Technology. The intellectual and technical
-//  concepts contained herein are proprietary to Push Technology and
+//  property of DiffusionData. The intellectual and technical
+//  concepts contained herein are proprietary to DiffusionData and
 //  may be covered by U.S. and Foreign Patents, patents in process, and
 //  are protected by trade secret or copyright law.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 #import <Diffusion/PTDiffusionBytes.h>
 #import <Diffusion/PTDiffusionFetchRequest.h>
 #import <Diffusion/PTDiffusionMessagingFeature.h>
@@ -48,10 +48,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  @brief An immutable JSON value with support for both binary and JSON deltas.
- 
+
  JSON is "JavaScript Object Notation", a lightweight data-interchange format.
  See [www.json.org](http://www.json.org).
- 
+
  Internally the value is stored and transmitted not as a JSON string, but in
  CBOR format to reduce memory and network overhead. CBOR (Concise Binary
  Object Representation) is a standardized format for binary representation of
@@ -69,24 +69,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Return a JSON object initialized with the given object.
- 
+
  Object hierarchies passed to this method must be constructed from Foundation
  objects which can be logically encoded with CBOR. This provides flexibility
  above and beyond the basic capabilities of a 'pure JSON' encoding as well as
  being less restrictive than the capabilities of NSJSONSerialization.
- 
+
  This means:
  - All objects are instances of `NSString`, `NSData`, `NSNumber`, `NSArray`,
    `NSDictionary` or `NSNull`.
  - Dictionary keys may be instances of any supported type.
  - The top level object may be of any supported type.
- 
+
  Being more permissive than NSJSONSerialization in that:
  - `NSData` instances may be used.
  - Dictionary keys are not restricted to instances of `NSString`.
  - The top level object is not restricted to being a container (`NSArray` or
    `NSDictionary`).
- 
+
  Applications may take advantage of the more permissive nature of the
  underlying CBOR encoding by using these capabilities, assuming:
  1. Encoding to JSON string is not required.
@@ -95,7 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param object The object to be serialized to CBOR and stored internally to
  represent the receiver.
- 
+
  @param error If this method returns `nil` to indicate that an error occurred
  then this will be populated with the reason for that failure.
 
@@ -111,11 +111,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Convenience wrapper around initWithObject:error: that first uses
  NSJSONSerialization to generate the object to be serialized.
- 
+
  @param jsonData A data object containing JSON data. See Apple's
  NSJSONSerialization documentation for detailed information regarding
  supported encodings.
- 
+
  @param error If this method returns `nil` to indicate that an error occurred
  then this will be populated with the reason for that failure.
 
@@ -149,13 +149,13 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Compare the receiver's JSON value with another (e.g. an earlier version) to
  create a binary delta.
- 
+
  @param json The original to which the delta should be able to be applied in
  order to generate the value represented by the receiver.
- 
+
  @param error If an error occurs, upon return contains an `NSError` object
  that describes the problem.
- 
+
  @return A delta representing the difference between json and the receiver,
  or `nil` if there was an error (e.g. either the original or the receiver
  don't represent a valid JSON value).
@@ -169,16 +169,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Apply a binary delta to the receiver's JSON value to create a new value.
- 
+
  @param delta The delta describing the changes to be applied to the receiver's
  value in order to create the value to be returned.
- 
+
  @param error If an error occurs, upon return contains an `NSError` object
  that describes the problem.
- 
+
  @return The new JSON value, or `nil` if there was an error (e.g. the receiver
  does not represent a valid JSON value).
- 
+
  @exception NSInvalidArgumentException Raised if the delta argument is `nil`.
 
  @since 5.9
@@ -221,7 +221,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return A data object containing JSON, or `nil` if there was an error (e.g.
  the receive doesn't represent a valid JSON value or cannot be converted to
  pure JSON).
- 
+
  @since 5.9
  */
 -(nullable NSData*)JSONDataWithError:(NSError **)error;
@@ -246,9 +246,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  Use PTDiffusionUpdateConstraint#noValue to check if the topic has no value.
 
- This constraint is useful when changing the value of a topic. It is unsatisfied
- if no topic is present at the path, making it unsuitable for operations that
- try to add topics.
+ This constraint is unsatisfied if no topic is present at the path.
 
  @since 6.3
  */
@@ -291,15 +289,15 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Creates a request handler capable of receiving JSON requests for a handler
  registered at the server.
- 
+
  @param delegate The object which will handle the incoming requests. A weak
  reference is maintained to this object by the returned handler.
- 
+
  @return An object reliant on the supplied delegate that can be registered at
  the server using the Messaging feature.
- 
+
  @exception NSInvalidArgumentException Raised if the delegate argument is `nil`.
- 
+
  @see PTDiffusionMessagingFeature
 
  @since 6.0
@@ -359,14 +357,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  @brief Extension adding support for responding to requests using JSON values.
- 
+
  @since 6.0
  */
 @interface PTDiffusionResponder (PTDiffusionJSON)
 
 /**
  Dispatch a response to a request.
- 
+
  @param json The value to send in response.
 
  @exception NSInvalidArgumentException Raised if the json argument is `nil`.
@@ -387,14 +385,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Send a request for which a JSON response is expected.
- 
+
  The message will be routed to an appropriately registered control handler for
  the given path.
 
  @param request The request to send.
- 
+
  @param path The path to send the request to.
- 
+
  @param completionHandler Block to be called asynchronously on success or
  failure. If the operation was successful, the `error` argument passed to the
  block will be `nil`. The completion handler will be called asynchronously on
@@ -439,20 +437,20 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @brief Extension adding support to the Time Series feature for appending and
  editing events using JSON values.
- 
+
  @since 6.0
  */
 @interface PTDiffusionTimeSeriesFeature (PTDiffusionJSON)
 
 /**
  Update a time series topic by appending a new JSON value.
- 
+
  The server will add an event to the end of the time series based on the
  supplied value, with a new sequence number, timestamp, and the author set to
  the authenticated principal of the session.
- 
+
  @param topicPath The path of the time series topic to update.
- 
+
  @param value The event value.
 
  @param completionHandler Block to be called asynchronously on success or
@@ -504,13 +502,13 @@ NS_ASSUME_NONNULL_BEGIN
 
  The existing event is identified by its sequence number and must be an original
  event.
- 
+
  The server will add an edit event to the end of the time series based on the
  supplied value, with a new sequence number, timestamp, and the author set to
  the authenticated principal of the session.
 
  @param topicPath The path of the time series topic to update.
- 
+
  @param originalSequence The sequence number of the original event to edit.
 
  @param value The event value.
@@ -535,9 +533,9 @@ NS_ASSUME_NONNULL_BEGIN
  Evaluate a query for a time series topic where events have JSON values.
 
  @param query The configured query.
- 
+
  @param topicPath The path of the time series topic to query.
- 
+
  @param completionHandler Block to be called asynchronously on success or
  failure. If the operation was successful, the `error` argument passed to the
  block will be `nil`. The completion handler will be called asynchronously on
@@ -731,9 +729,11 @@ NS_ASSUME_NONNULL_BEGIN
 
  @exception NSInvalidArgumentException If path is `nil`.
 
+ @deprecated since 6.9. Use {@link PTDiffusionTopicUpdateFeature#newUpdateStreamBuilder} instead
+
  @since 6.3
  */
--(PTDiffusionJSONUpdateStream *)jsonUpdateStreamWithPath:(NSString *)path;
+-(PTDiffusionJSONUpdateStream *)jsonUpdateStreamWithPath:(NSString *)path __deprecated_msg("Will be removed in a future release.");
 
 /**
  Creates an update stream to use for updating a specific topic with JSON values
@@ -757,10 +757,12 @@ NS_ASSUME_NONNULL_BEGIN
 
  @exception NSInvalidArgumentException If either argument is `nil`.
 
+ @deprecated since 6.9. Use {@link PTDiffusionTopicUpdateFeature#newUpdateStreamBuilder} instead
+
  @since 6.3
  */
 -(PTDiffusionJSONUpdateStream *)jsonUpdateStreamWithPath:(NSString *)path
-                                              constraint:(PTDiffusionUpdateConstraint *)constraint;
+                                              constraint:(PTDiffusionUpdateConstraint *)constraint __deprecated_msg("Will be removed in a future release.");
 
 /**
  Creates an update stream to use for creating and updating a specific topic with
@@ -785,10 +787,12 @@ NS_ASSUME_NONNULL_BEGIN
  type defined in the specification is incompatible with
  PTDiffusionDataTypes#json.
 
+ @deprecated since 6.9. Use {@link PTDiffusionTopicUpdateFeature#newUpdateStreamBuilder} instead
+
  @since 6.3
  */
 -(PTDiffusionJSONUpdateStream *)jsonUpdateStreamWithPath:(NSString *)path
-                                           specification:(PTDiffusionTopicSpecification *)specification;
+                                           specification:(PTDiffusionTopicSpecification *)specification __deprecated_msg("Will be removed in a future release.");
 
 /**
  Creates an update stream to use for creating and updating a specific topic with
@@ -816,11 +820,13 @@ NS_ASSUME_NONNULL_BEGIN
  type defined in the specification is incompatible with
  PTDiffusionDataTypes#json.
 
+ @deprecated since 6.9. Use {@link PTDiffusionTopicUpdateFeature#newUpdateStreamBuilder} instead
+
  @since 6.3
  */
 -(PTDiffusionJSONUpdateStream *)jsonUpdateStreamWithPath:(NSString *)path
                                            specification:(PTDiffusionTopicSpecification *)specification
-                                              constraint:(PTDiffusionUpdateConstraint *)constraint;
+                                              constraint:(PTDiffusionUpdateConstraint *)constraint __deprecated_msg("Will be removed in a future release.");
 
 @end
 

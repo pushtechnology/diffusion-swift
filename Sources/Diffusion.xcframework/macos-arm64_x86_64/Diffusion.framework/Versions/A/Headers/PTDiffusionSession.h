@@ -1,16 +1,16 @@
 //  Diffusion Client Library for iOS, tvOS and OS X / macOS
 //
-//  Copyright (c) 2015, 2021 Push Technology Ltd., All Rights Reserved.
+//  Copyright (c) 2015 - 2023 DiffusionData Ltd., All Rights Reserved.
 //
-//  Use is subject to license terms.
+//  Use is subject to licence terms.
 //
 //  NOTICE: All information contained herein is, and remains the
-//  property of Push Technology. The intellectual and technical
-//  concepts contained herein are proprietary to Push Technology and
+//  property of DiffusionData. The intellectual and technical
+//  concepts contained herein are proprietary to DiffusionData and
 //  may be covered by U.S. and Foreign Patents, patents in process, and
 //  are protected by trade secret or copyright law.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 @class PTDiffusionClientControlFeature;
 @class PTDiffusionMessagingFeature;
@@ -98,10 +98,82 @@ NS_ASSUME_NONNULL_BEGIN
  This property is Key-Value Observable with changes being notified on
  the main dispatch queue when the session state changes.
 
+
+ ### Session properties
+
+ For each session, the server stores a set of session properties that describe
+ various attributes of the session.
+
+
+ There are two types of session property. Fixed properties are assigned by
+ Diffusion. User-defined properties are assigned by the application.
+
+
+ Many operations use session filter expressions that use session properties to select sessions.
+
+
+ A privileged client can monitor other sessions, including changes to their
+ session properties, using a session event listener. When registering to receive session properties,
+ special key values of {@link #allFixedProperties} and {@link #allUserProperties} can be used.
+
+
+ Each property is identified by a key. Most properties have a single string
+ value. The exception is the $Roles fixed property which has a set of string values.
+
+ Fixed properties are identified by keys with a '$' prefix. The available fixed session properties are:
+
+ | Key              | Description                                                                                                                                   |
+ |------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+ | `$ClientIP`      | The Internet address of the client in string format.                                                                                          |
+ | `$ClientType`    | The client type of the session. One of `ANDROID`, `C`, `DOTNET`, `IOS`, `JAVA`, `JAVASCRIPT_BROWSER`, `MQTT`, `PYTHON`, `REST`, `OTHER`.      |
+ | `$Environment`   | The environment in which the client is running. For possible values see the <a href="https://docs.diffusiondata.com/docs/latest/manual/html/developerguide/client/basics/uci_session_properties.html">user manual.</a>    |
+ | `$Connector`     | The configuration name of the server connector that the client connected to.                                                                  |
+ | `$Country`       | The country code for the country where the client's Internet address was allocated (for example, `NZ` for New Zealand). Country codes are as defined by Locale. If the country code could not be determined, this will be a zero length string.   |
+ | `$GatewayType`   | Gateway client type. Only set for gateway client sessions. If present it indicates the type of gateway client (e.g. Kafka).                   |
+ | `$GatewayId`     | The identity of a gateway client session. Only present if the `$GatewayType` session property is present.                                     |
+ | `$Language`      | The language code for the official language of the country where the client's Internet address was allocated (for example, `en` for English). Language codes are as defined by Locale. If the language could not be determined or is not applicable, this will be a zero length string.   |
+ | `$Latitude`      | The client's latitude, if available. This will be the string representation of a floating point number and will be `NaN` if not available.    |
+ | `$Longitude`     | The client's longitude, if available. This will be the string representation of a floating point number and will be `NaN` if not available.   |
+ | `$MQQTClientId`  | The MQTT client identifier. Only set for MQTT sessions. If present, the value of the `$ClientType` session property will be `MQTT`.           |
+ | `$Principal`     | The security principal associated with the client session.                                                                                    |
+ | `$Roles`         | Authorisation roles assigned to the session. This is a set of roles represented as quoted strings (for example, `"role1","role2"`).           |
+ | `$ServerName`    | The name of the server to which the session is connected.                                                                                     |
+ | `$SessionId`     | The session identifier.                                                                                                                       |
+ | `$StartTime`     | The session's start time in milliseconds since the epoch.                                                                                     |
+ | `$Transport`     | The session transport type. One of `WEBSOCKET`, `HTTP_LONG_POLL`, `TCP`, or `OTHER`.                                                          |
+
+
+ All user-defined property keys are non-empty strings. The characters ' ', \\t, \\r, \\n, \", ', (, ) are not allowed.
+
+
+ Session properties are initially associated with a session as follows:
+ 1. When a client starts a new session, it can optionally propose user-defined session properties. Session properties proposed in this way must be accepted by the authenticator. This safeguard prevents abuse by a rogue, unprivileged client.
+ 2. Diffusion allocates all fixed property values.
+ 3. The new session is authenticated by registered authenticators. An authenticator that accepts a session can veto or change the user-defined session properties and add new user-defined session properties. The authenticator can also change certain fixed properties.
+
+
+ Once a session is established, its user-defined session properties can be modified by clients
+ with `VIEW_SESSION` and `MODIFY_SESSION` permissions. A privileged client can also modify its own session properties.
+
+
+ If a session re-authenticates, the authenticator that allows the re-authentication can modify the user-defined
+ session properties and a subset of the fixed properties as mentioned above.
+
+
+ ### Session filters
+
+ Session filters are a mechanism of addressing a set of sessions by the values
+ of their session properties.
+
+ Session filters are specified using a Domain Specific Language (DSL). For a full and
+ detailed description of the session filters DSL see the [user manual](https://docs.diffusiondata.com/docs/latest/manual/html/developerguide/client/basics/uci_session_filtering.html).
+
+
  ### Session locks
 
  The actions of multiple sessions can be coordinated using session locks. See
  PTDiffusionSession#lockWithName:completionHandler:
+
 
  @since 5.6
  */
@@ -412,8 +484,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  The Subscription Control feature allows a client session to subscribe or
- unsubscribe other sessions to topics, as well as also providing a mechanism for
- handling requests to subscribe to routing topics.
+ unsubscribe other sessions to topics.
 
  @since 6.1
  */
@@ -606,6 +677,13 @@ NS_ASSUME_NONNULL_BEGIN
  @since 6.6
  */
 +(NSString *)gatewayIdPropertyKey;
+
+/**
+ Session property key for environment.
+
+ @since 6.11
+ */
++(NSString *)environmentPropertyKey;
 
 
 @end

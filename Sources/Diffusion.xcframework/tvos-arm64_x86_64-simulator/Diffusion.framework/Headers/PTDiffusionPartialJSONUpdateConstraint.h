@@ -1,16 +1,16 @@
 //  Diffusion Client Library for iOS, tvOS and OS X / macOS
 //
-//  Copyright (c) 2019 Push Technology Ltd., All Rights Reserved.
+//  Copyright (c) 2019 - 2023 DiffusionData Ltd., All Rights Reserved.
 //
-//  Use is subject to license terms.
+//  Use is subject to licence terms.
 //
 //  NOTICE: All information contained herein is, and remains the
-//  property of Push Technology. The intellectual and technical
-//  concepts contained herein are proprietary to Push Technology and
+//  property of DiffusionData. The intellectual and technical
+//  concepts contained herein are proprietary to DiffusionData and
 //  may be covered by U.S. and Foreign Patents, patents in process, and
 //  are protected by trade secret or copyright law.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 #import <Diffusion/PTDiffusionUpdateConstraint.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -53,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(nullable instancetype)withNullAt:(NSString *)pointer
                              error:(NSError **)error;
 
+
 /**
  Require a specific position in the JSON object to be absent. This does not
  match positions that have `null` values.
@@ -70,6 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 -(nullable instancetype)without:(NSString *)pointer
                           error:(NSError **)error;
+
 
 @end
 

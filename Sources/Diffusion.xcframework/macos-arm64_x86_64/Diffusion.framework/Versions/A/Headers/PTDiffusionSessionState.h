@@ -1,16 +1,16 @@
 //  Diffusion Client Library for iOS, tvOS and OS X / macOS
 //
-//  Copyright (c) 2015, 2016 Push Technology Ltd., All Rights Reserved.
+//  Copyright (c) 2015 - 2023 DiffusionData Ltd., All Rights Reserved.
 //
-//  Use is subject to license terms.
+//  Use is subject to licence terms.
 //
 //  NOTICE: All information contained herein is, and remains the
-//  property of Push Technology. The intellectual and technical
-//  concepts contained herein are proprietary to Push Technology and
+//  property of DiffusionData. The intellectual and technical
+//  concepts contained herein are proprietary to DiffusionData and
 //  may be covered by U.S. and Foreign Patents, patents in process, and
 //  are protected by trade secret or copyright law.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -79,6 +79,57 @@ NS_ASSUME_NONNULL_BEGIN
  */
 -(BOOL)isEqualToSessionState:(nullable PTDiffusionSessionState *)sessionState;
 
+
+
+/**
+ The session has been closed by the client.
+
+ @since 6.11
+ */
++(instancetype)ClosedByClient;
+
+
+/**
+ The session has been closed (or rejected) by the server.
+
+ @since 6.11
+ */
++(instancetype)ClosedByServer;
+
+
+/**
+ The session has lost its connection to a server and could not be recovered.
+
+ @since 6.11
+ */
++(instancetype)ClosedFailed;
+
+
+/**
+ An active connection with the server has been established.
+
+ @since 6.11
+ */
++(instancetype)ConnectedActive;
+
+
+/**
+ The session is establishing its initial connection.
+
+ @since 6.11
+ */
++(instancetype)Connecting;
+
+
+/**
+ Connection with a server has been lost and the session is attempting reconnection.
+
+ @since 6.11
+ */
++(instancetype)RecoveringReconnect;
+
+
 @end
+
 
 NS_ASSUME_NONNULL_END

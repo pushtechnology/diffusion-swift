@@ -2,6 +2,27 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>20157</key>
+	<dict>
+		<key>description</key>
+		<string>Update Stream recovery attempt limit has been reached.</string>
+		<key>domain</key>
+		<string>PTDiffusion</string>
+	</dict>
+	<key>20158</key>
+	<dict>
+		<key>description</key>
+		<string>Failed to serialise value.</string>
+		<key>domain</key>
+		<string>PTDiffusion</string>
+	</dict>
+	<key>20159</key>
+	<dict>
+		<key>description</key>
+		<string>Client version rejected: Client should be downgraded to use server compatible version or server upgraded to client version in use.</string>
+		<key>domain</key>
+		<string>PTDiffusion</string>
+	</dict>
 	<key>100</key>
 	<dict>
 		<key>description</key>
@@ -369,7 +390,7 @@
 	<key>20039</key>
 	<dict>
 		<key>description</key>
-		<string>Additional information &lt;value&gt; is unhandled.</string>
+		<string>Additional information: &lt;value&gt; is unhandled.</string>
 		<key>domain</key>
 		<string>PTDiffusion</string>
 	</dict>
@@ -551,7 +572,7 @@
 	<key>20065</key>
 	<dict>
 		<key>description</key>
-		<string>Data loss on topic with id '&lt;id&gt;'. Session closing.</string>
+		<string>Data loss on topic with id &apos;&lt;id&gt;&apos;. Session closing.</string>
 		<key>domain</key>
 		<string>PTDiffusion</string>
 	</dict>
@@ -642,7 +663,7 @@
 	<key>20078</key>
 	<dict>
 		<key>description</key>
-		<string>JSON Pointer expression must be empty or start with '/'.</string>
+		<string>JSON Pointer expression must be empty or start with &apos;/&apos;.</string>
 		<key>domain</key>
 		<string>PTDiffusion</string>
 	</dict>
@@ -880,7 +901,7 @@
 	<key>20111</key>
 	<dict>
 		<key>description</key>
-		<string>Field key's name is missing.</string>
+		<string>Field key&apos;s name is missing.</string>
 		<key>domain</key>
 		<string>PTDiffusion</string>
 	</dict>
@@ -1293,7 +1314,7 @@
 	<key>9013</key>
 	<dict>
 		<key>description</key>
-		<string>The topic update failed because the update stream is no longer valid.</string>
+		<string>The topic update failed because the update stream is no longer valid: &lt;reason&gt;</string>
 		<key>domain</key>
 		<string>PTDiffusion</string>
 	</dict>

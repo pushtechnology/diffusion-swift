@@ -1,16 +1,16 @@
 //  Diffusion Client Library for iOS, tvOS and OS X / macOS
 //
-//  Copyright (c) 2017, 2021 Push Technology Ltd., All Rights Reserved.
+//  Copyright (c) 2017 - 2023 DiffusionData Ltd., All Rights Reserved.
 //
-//  Use is subject to license terms.
+//  Use is subject to licence terms.
 //
 //  NOTICE: All information contained herein is, and remains the
-//  property of Push Technology. The intellectual and technical
-//  concepts contained herein are proprietary to Push Technology and
+//  property of DiffusionData. The intellectual and technical
+//  concepts contained herein are proprietary to DiffusionData and
 //  may be covered by U.S. and Foreign Patents, patents in process, and
 //  are protected by trade secret or copyright law.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -1147,7 +1147,30 @@ typedef NS_ENUM(NSInteger, PTDiffusionError) {
      */
     PTDiffusionError_KeyNotFoundInDictionary = 20155,
 
+    /**
+     * Invalid argument for the method.
+     * @since 6.10
+     */
+    PTDiffusionError_InvalidArgument = 20156,
+
+    /**
+     * Update Stream recovery attempt limit has been reached.
+     * @since 6.9
+     */
+    PTDiffusionError_UpdateStreamRecoveryLimit = 20157,
+
+    /**
+     * Failed to serialise value.
+     * @since 6.9
+     */
+    PTDiffusionError_ValueSerialisation = 20158,
+
+    /**
+     * Invalid Protocol Version.
+     * @since 6.10
+     */
+    PTDiffusionError_ClientVersionDowngrade = 20159,
+
 };
 
 NS_ASSUME_NONNULL_END
-

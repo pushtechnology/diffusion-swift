@@ -1,16 +1,16 @@
 //  Diffusion Client Library for iOS, tvOS and OS X / macOS
 //
-//  Copyright (c) 2016, 2021 Push Technology Ltd., All Rights Reserved.
+//  Copyright (c) 2016 - 2023 DiffusionData Ltd., All Rights Reserved.
 //
-//  Use is subject to license terms.
+//  Use is subject to licence terms.
 //
 //  NOTICE: All information contained herein is, and remains the
-//  property of Push Technology. The intellectual and technical
-//  concepts contained herein are proprietary to Push Technology and
+//  property of DiffusionData. The intellectual and technical
+//  concepts contained herein are proprietary to DiffusionData and
 //  may be covered by U.S. and Foreign Patents, patents in process, and
 //  are protected by trade secret or copyright law.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 #import <Diffusion/PTDiffusionTopicType.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -52,7 +52,6 @@ NS_ASSUME_NONNULL_BEGIN
                                        Int64</th>
         <th style="text-align:center;">RecordV2</th>
         <th style="text-align:center;">TimeSeries</th>
-        <th style="text-align:center;">Routing</th>
     </tr>
     <tr>
         <th style="text-align:left;">COMPRESSION</th>
@@ -60,7 +59,6 @@ NS_ASSUME_NONNULL_BEGIN
         <td></td>
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">—</td>
-        <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
     </tr>
@@ -72,7 +70,6 @@ NS_ASSUME_NONNULL_BEGIN
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional <sup>†</sup></td>
-        <td style="text-align:center;">Optional</td>
     </tr>
     <tr>
         <th style="text-align:left;">DONT_RETAIN_VALUE</th>
@@ -82,13 +79,11 @@ NS_ASSUME_NONNULL_BEGIN
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">—</td>
-        <td style="text-align:center;">— <sup>‡</sup></td>
     </tr>
     <tr>
         <th style="text-align:left;">OWNER</th>
         <td style="text-align:center;"></td>
         <td></td>
-        <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
@@ -102,13 +97,11 @@ NS_ASSUME_NONNULL_BEGIN
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
-        <td style="text-align:center;">Optional</td>
     </tr>
     <tr>
         <th style="text-align:left;">PRIORITY</th>
         <td style="text-align:center;">`default`</td>
         <td></td>
-        <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
@@ -122,13 +115,11 @@ NS_ASSUME_NONNULL_BEGIN
         <td style="text-align:center;">—</td>
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
-        <td style="text-align:center;">— <sup>‡</sup></td>
     </tr>
     <tr>
         <th style="text-align:left;">REMOVAL</th>
         <td style="text-align:center;"></td>
         <td></td>
-        <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
@@ -142,13 +133,11 @@ NS_ASSUME_NONNULL_BEGIN
         <td style="text-align:center;">—</td>
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">—</td>
-        <td style="text-align:center;">—</td>
     </tr>
     <tr>
         <th style="text-align:left;">TIDY_ON_UNSUBSCRIBE</th>
         <td style="text-align:center;">`false`</td>
         <td></td>
-        <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
@@ -162,7 +151,6 @@ NS_ASSUME_NONNULL_BEGIN
         <td style="text-align:center;">—</td>
         <td style="text-align:center;">—</td>
         <td style="text-align:center;">Required</td>
-        <td style="text-align:center;">—</td>
     </tr>
     <tr>
         <th style="text-align:left;">TIME_SERIES_RETAINED_RANGE</th>
@@ -172,7 +160,6 @@ NS_ASSUME_NONNULL_BEGIN
         <td style="text-align:center;">—</td>
         <td style="text-align:center;">—</td>
         <td style="text-align:center;">Optional</td>
-        <td style="text-align:center;">—</td>
     </tr>
     <tr>
         <th style="text-align:left;">TIME_SERIES_SUBSCRIPTION_RANGE</th>
@@ -182,7 +169,6 @@ NS_ASSUME_NONNULL_BEGIN
         <td style="text-align:center;">—</td>
         <td style="text-align:center;">—</td>
         <td style="text-align:center;">Optional</td>
-        <td style="text-align:center;">—</td>
     </tr>
     <tr>
         <th style="text-align:left;">VALIDATE_VALUES</th>
@@ -192,21 +178,16 @@ NS_ASSUME_NONNULL_BEGIN
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
         <td style="text-align:center;">Optional</td>
-        <td style="text-align:center;">— <sup>‡</sup>
     </tr>
  </table>
 
  <dl>
     <dt>†
+    </dt>
     <dd>`TIME_SERIES` topics have restricted values for the
         `CONFLATION` property. They are only allowed to have the values
         `off` or `unsubscribe`.
-    <dt>‡
-    <dd>`ROUTING` topics (deprecated) are references to other topics, and have no value
-        of their own. Instead, they reflect the value of the appropriate source
-        topic. Observed behavior depends on the values of the
-        `DONT_RETAIN_VALUE`, `PUBLISH_VALUES_ONLY`, and
-        `VALIDATE_VALUES` properties that are set on the source topic.
+    </dd>
  </dl>
 
  @since 5.9
@@ -463,8 +444,8 @@ NS_ASSUME_NONNULL_BEGIN
  Key of boolean topic property that specifies a topic should not retain
  its last value.
 
- By default, a topic (other than a `ROUTING`) will retain its
- latest value. The latest value will be sent to new subscribers. Setting
+ By default, a topic will retain its latest value.
+ The latest value will be sent to new subscribers. Setting
  this property to `true` disables this behavior. New subscribers
  will not be sent an  initial value. No value will be returned for fetch
  operations that select the topic. This is useful for data streams where
@@ -727,13 +708,12 @@ NS_ASSUME_NONNULL_BEGIN
  only that when evaluated the given period of time has passed since it was last
  evaluated and found to have no matching sessions.
 
- Subscriptions is the number of subscriptions to a topic, including those that
- occur through routing topics. When monitoring across a cluster the
- `subscriptions less than` condition is first checked on the server that owns
- the topic and if satisfied there then each cluster member is queried to check
- if the condition has also been satisfied there. The topic will only be removed
- if the total number of subscriptions across the cluster is less than that
- specified in the condition.
+ Subscriptions is the number of subscriptions to a topic.
+ When monitoring across a cluster the `subscriptions less than` condition is first
+ checked on the server that owns the topic and if satisfied there then each cluster
+ member is queried to check if the condition has also been satisfied there.
+ The topic will only be removed if the total number of subscriptions across the
+ cluster is less than that specified in the condition.
 
  Automatic topic removal is supported for a topic that is replicated
  across the local cluster, and for a topic with with fanout replicas on

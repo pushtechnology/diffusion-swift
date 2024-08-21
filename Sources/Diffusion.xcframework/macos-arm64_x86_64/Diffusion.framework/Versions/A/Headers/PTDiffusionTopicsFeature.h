@@ -1,16 +1,16 @@
 //  Diffusion Client Library for iOS, tvOS and OS X / macOS
 //
-//  Copyright (c) 2015, 2020 Push Technology Ltd., All Rights Reserved.
+//  Copyright (c) 2015 - 2024 DiffusionData Ltd., All Rights Reserved.
 //
-//  Use is subject to license terms.
+//  Use is subject to licence terms.
 //
 //  NOTICE: All information contained herein is, and remains the
-//  property of Push Technology. The intellectual and technical
-//  concepts contained herein are proprietary to Push Technology and
+//  property of DiffusionData. The intellectual and technical
+//  concepts contained herein are proprietary to DiffusionData and
 //  may be covered by U.S. and Foreign Patents, patents in process, and
 //  are protected by trade secret or copyright law.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 #import <Diffusion/PTDiffusionTopicUpdateFeature.h>
 #import <Diffusion/PTDiffusionTopicUnsubscriptionReason.h>
 
@@ -286,6 +286,67 @@ NS_ASSUME_NONNULL_BEGIN
  */
 -(void)unsubscribeFromTopicSelectorExpression:(NSString *)expression
                             completionHandler:(void (^)(NSError * _Nullable error))completionHandler;
+
+
+
+/**
+ Request subscription to topics.
+
+ The session will become subscribed to each existing topic matching
+ the selector unless the session is already subscribed to the topic,
+ or the session does not have `READ_TOPIC` permission for the topic
+ path. For each topic to which the session becomes subscribed, a
+ subscription notification and initial value (if any) will be
+ delivered to registered value streams before the completion handler
+ is called.
+
+ The subscription request is also retained at the server and the session
+ will be automatically subscribed to newly created topics that match the
+ selector (unless a subsequent unsubscription cancels the request).
+
+ @param selector The @ref md_topic_selectors "topic selector" to be
+ evaluated by the server.
+
+ @param completionHandler Block to be called asynchronously on success or failure.
+ If the operation was successful, the `error` argument passed to the block will be `nil`.
+ The completion handler will be called asynchronously on the main dispatch queue.
+ 
+ @param error Populated in case of an invalid argument passed to the method.
+
+ @exception NSInvalidArgumentException Raised if any supplied arguments are `nil`.
+ 
+ @return true is arguments are valid, false otherwise.
+
+ @since 6.11
+ */
+-(BOOL)subscribeWithTopicSelector:(PTDiffusionTopicSelector *)selector
+                completionHandler:(void (^)(NSError * _Nullable))completionHandler
+                            error:(NSError *__autoreleasing *const)error;
+
+
+
+/**
+ Request unsubscription from topics.
+
+ @param selector The @ref md_topic_selectors "topic selector" to be
+ evaluated by the server.
+
+ @param completionHandler Block to be called asynchronously on success or failure.
+ If the operation was successful, the `error` argument passed to the block will be `nil`.
+ The completion handler will be called asynchronously on the main dispatch queue.
+ 
+ @param error Populated in case of an invalid argument passed to the method.
+
+ @exception NSInvalidArgumentException Raised if any supplied arguments are `nil`.
+ 
+ @return true is arguments are valid, false otherwise.
+
+ @since 6.11
+ */
+-(BOOL)unsubscribeFromTopicSelector:(PTDiffusionTopicSelector *)selector
+                  completionHandler:(void (^ const)(NSError *))completionHandler
+                              error:(NSError *__autoreleasing *const)error;
+
 
 /**
  When a matching update is received from the server for a topic, it will be

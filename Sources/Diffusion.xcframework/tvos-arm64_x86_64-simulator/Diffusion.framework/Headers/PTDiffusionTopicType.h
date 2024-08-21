@@ -1,16 +1,16 @@
 //  Diffusion Client Library for iOS, tvOS and OS X / macOS
 //
-//  Copyright (c) 2015, 2021 Push Technology Ltd., All Rights Reserved.
+//  Copyright (c) 2015 - 2023 DiffusionData Ltd., All Rights Reserved.
 //
-//  Use is subject to license terms.
+//  Use is subject to licence terms.
 //
 //  NOTICE: All information contained herein is, and remains the
-//  property of Push Technology. The intellectual and technical
-//  concepts contained herein are proprietary to Push Technology and
+//  property of DiffusionData. The intellectual and technical
+//  concepts contained herein are proprietary to DiffusionData and
 //  may be covered by U.S. and Foreign Patents, patents in process, and
 //  are protected by trade secret or copyright law.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 /**
  @file PTDiffusionTopicType.h
@@ -33,68 +33,11 @@
  | #PTDiffusionTopicType_JSON       | Single composite value.       | #PTDiffusionJSON, backed by CBOR-format binary.   |
  | #PTDiffusionTopicType_TimeSeries | Append-only log of events.    | #PTDiffusionTimeSeriesEvent containing a value of a \link #PTDiffusionDataTypes well-known data type\endlink. |
 
-
- ###Routing Topics (deprecated)
-
- A PTDiffusionTopicType_Routing topic can have a different source topic for each
- subscription.
-
- Routing topics republish values from source topics. The data type is
- inherited from the source topic.
-
- Routing topics are deprecated in favor of {@link PTDiffusionSessionTreesFeature Session Trees}.
-
  @see PTDiffusionTopicSpecification
 
  @since 5.6
  */
 typedef NS_ENUM(NSUInteger, PTDiffusionTopicType) {
-    /**
-     Routing Topic.
-
-     A topic that can reference different source topics for different sessions.
-
-     Each subscription to a routing topic is routed to a source topic. Updates
-     to the source topic are routed back to the subscriber and appear to come
-     from the routing topic.
-
-     The result is that a session may subscribe to a topic which is in reality
-     supported by another topic and the mapping of the routing topic to the
-     actual topic can be different for each session.
-
-     As an example, you may wish for all sessions to simply subscribe to a
-     topic called "Prices" but depending upon the client type the actual topic
-     could differ (Prices/Discount, Prices/Standard etc).
-
-     An instance of this topic may map any number of sessions to any number of
-     different source topics.
-
-     From the point of view of a session subscribing to such a topic, a
-     routing topic appears to be a normal topic but it has no state of its own
-     and cannot be updated.
-
-     The mapping of sessions to source topics is performed by a control client
-     session using the Subscription Control feature. When a session subscribes
-     to the routing topic the control client is requested to provide the topic
-     that the client is to be subscribed to. If there is no control client
-     available to handle subscriptions at the time a session subscribed, the
-     session will not be subscribed to the topic.
-
-     Alternatively, the routing can be determined by a user-written Java class
-     (deployed on the server) which will be invoked to define the mapping of
-     the topic to another data topic when a session subscribes.
-
-     When a source topic is removed that is mapped to from a routing topic then
-     any session that were mapped to that source topic will be unsubscribed from
-     the routing topic.
-
-     @since 5.7
-
-     @deprecated since 6.7 Routing Topics are deprecated. The more powerful
-     {@link PTDiffusionSessionTreesFeature Session Trees} feature should be used in their place.
-     */
-    PTDiffusionTopicType_Routing __deprecated_enum_msg("Use PTDiffusionSessionTreesFeature instead") = 12,
-
     /**
      Topic that stores and publishes binary values. Based on the
      PTDiffusionBinary data type.

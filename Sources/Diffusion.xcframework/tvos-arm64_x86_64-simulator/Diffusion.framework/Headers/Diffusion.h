@@ -1,22 +1,22 @@
 //  Diffusion Client Library for iOS, tvOS and OS X / macOS
 //
-//  Copyright (c) 2015, 2021 Push Technology Ltd., All Rights Reserved.
+//  Copyright (c) 2015 - 2023 DiffusionData Ltd., All Rights Reserved.
 //
-//  Use is subject to license terms.
+//  Use is subject to licence terms.
 //
 //  NOTICE: All information contained herein is, and remains the
-//  property of Push Technology. The intellectual and technical
-//  concepts contained herein are proprietary to Push Technology and
+//  property of DiffusionData. The intellectual and technical
+//  concepts contained herein are proprietary to DiffusionData and
 //  may be covered by U.S. and Foreign Patents, patents in process, and
 //  are protected by trade secret or copyright law.
 
 /**
  @file Diffusion.h
- 
+
  Framework umbrella header file.
  */
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 #import <Diffusion/PTDiffusion.h>
 #import <Diffusion/PTDiffusionAddTopicResult.h>
@@ -68,6 +68,8 @@
 #import <Diffusion/PTDiffusionHTTPProxyConfiguration.h>
 #import <Diffusion/PTDiffusionHTTPResponse.h>
 #import <Diffusion/PTDiffusionJSON.h>
+#import <Diffusion/PTDiffusionJSONDelta.h>
+#import <Diffusion/PTDiffusionJSONDeltaChangeMap.h>
 #import <Diffusion/PTDiffusionJSONFetchResult.h>
 #import <Diffusion/PTDiffusionJSONFetchTopicResult.h>
 #import <Diffusion/PTDiffusionJSONRequestDelegate.h>
@@ -132,12 +134,16 @@
 #import <Diffusion/PTDiffusionRemoteServerConnectionOption.h>
 #import <Diffusion/PTDiffusionRemoteServerConnectionState.h>
 #import <Diffusion/PTDiffusionRemoteServersFeature.h>
+#import <Diffusion/PTDiffusionPrimaryInitiatorRemoteServer.h>
+#import <Diffusion/PTDiffusionSecondaryInitiatorRemoteServer.h>
+#import <Diffusion/PTDiffusionSecondaryAcceptorRemoteServer.h>
 #import <Diffusion/PTDiffusionRequest.h>
 #import <Diffusion/PTDiffusionRequestContext.h>
 #import <Diffusion/PTDiffusionRequestHandler.h>
 #import <Diffusion/PTDiffusionRequestStream.h>
 #import <Diffusion/PTDiffusionResponder.h>
 #import <Diffusion/PTDiffusionResponse.h>
+#import <Diffusion/PTDiffusionRetryStrategy.h>
 #import <Diffusion/PTDiffusionSecurityFeature.h>
 #import <Diffusion/PTDiffusionSendDeliveryPriority.h>
 #import <Diffusion/PTDiffusionSession.h>
@@ -158,6 +164,7 @@
 #import <Diffusion/PTDiffusionSessionResponseStreamDelegate.h>
 #import <Diffusion/PTDiffusionSessionState.h>
 #import <Diffusion/PTDiffusionSessionStateChange.h>
+#import <Diffusion/PTDiffusionSessionStateChangeDelegate.h>
 #import <Diffusion/PTDiffusionSessionTreesFeature.h>
 #import <Diffusion/PTDiffusionSetSessionPropertiesResult.h>
 #import <Diffusion/PTDiffusionStream.h>
@@ -174,8 +181,6 @@
 #import <Diffusion/PTDiffusionStringValueStreamDelegate.h>
 #import <Diffusion/PTDiffusionSubscriberStreamDelegate.h>
 #import <Diffusion/PTDiffusionSubscriptionControlFeature.h>
-#import <Diffusion/PTDiffusionSubscriptionRoutingRequest.h>
-#import <Diffusion/PTDiffusionSubscriptionRoutingRequestHandler.h>
 #import <Diffusion/PTDiffusionTimeSeriesEvent.h>
 #import <Diffusion/PTDiffusionTimeSeriesEventMetadata.h>
 #import <Diffusion/PTDiffusionTimeSeriesFeature.h>
@@ -192,7 +197,6 @@
 #import <Diffusion/PTDiffusionTopicNotificationRegistration.h>
 #import <Diffusion/PTDiffusionTopicNotificationsFeature.h>
 #import <Diffusion/PTDiffusionTopicNotificationType.h>
-#import <Diffusion/PTDiffusionTopicPermission.h>
 #import <Diffusion/PTDiffusionTopicSelector.h>
 #import <Diffusion/PTDiffusionTopicsFeature.h>
 #import <Diffusion/PTDiffusionTopicRemovalResult.h>
@@ -205,6 +209,9 @@
 #import <Diffusion/PTDiffusionTopicView.h>
 #import <Diffusion/PTDiffusionTopicViewsFeature.h>
 #import <Diffusion/PTDiffusionUpdateConstraint.h>
+#import <Diffusion/PTDiffusionUpdateConstraintOperator.h>
 #import <Diffusion/PTDiffusionUpdateStream.h>
+#import <Diffusion/PTDiffusionRecoverableUpdateStream.h>
+#import <Diffusion/PTDiffusionUpdateStreamBuilder.h>
 #import <Diffusion/PTDiffusionValueStream.h>
 #import <Diffusion/PTDiffusionVersion.h>

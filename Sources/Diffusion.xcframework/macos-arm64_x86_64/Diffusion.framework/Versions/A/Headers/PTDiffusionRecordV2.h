@@ -1,16 +1,16 @@
 //  Diffusion Client Library for iOS, tvOS and OS X / macOS
 //
-//  Copyright (c) 2017, 2021 Push Technology Ltd., All Rights Reserved.
+//  Copyright (c) 2017 - 2023 DiffusionData Ltd., All Rights Reserved.
 //
-//  Use is subject to license terms.
+//  Use is subject to licence terms.
 //
 //  NOTICE: All information contained herein is, and remains the
-//  property of Push Technology. The intellectual and technical
-//  concepts contained herein are proprietary to Push Technology and
+//  property of DiffusionData. The intellectual and technical
+//  concepts contained herein are proprietary to DiffusionData and
 //  may be covered by U.S. and Foreign Patents, patents in process, and
 //  are protected by trade secret or copyright law.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 #import <Diffusion/PTDiffusionBytes.h>
 #import <Diffusion/PTDiffusionFetchRequest.h>
 #import <Diffusion/PTDiffusionMessagingFeature.h>
@@ -159,9 +159,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  Use PTDiffusionUpdateConstraint#noValue to check if the topic has no value.
 
- This constraint is useful when changing the value of a topic. It is unsatisfied
- if no topic is present at the path, making it unsuitable for operations that
- try to add topics.
+ This constraint is unsatisfied if no topic is present at the path.
 
  @since 6.3
  */

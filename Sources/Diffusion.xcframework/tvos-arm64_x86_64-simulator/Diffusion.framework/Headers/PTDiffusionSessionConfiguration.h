@@ -1,25 +1,29 @@
 //  Diffusion Client Library for iOS, tvOS and OS X / macOS
 //
-//  Copyright (c) 2015, 2020 Push Technology Ltd., All Rights Reserved.
+//  Copyright (c) 2015 - 2023 DiffusionData Ltd., All Rights Reserved.
 //
-//  Use is subject to license terms.
+//  Use is subject to licence terms.
 //
 //  NOTICE: All information contained herein is, and remains the
-//  property of Push Technology. The intellectual and technical
-//  concepts contained herein are proprietary to Push Technology and
+//  property of DiffusionData. The intellectual and technical
+//  concepts contained herein are proprietary to DiffusionData and
 //  may be covered by U.S. and Foreign Patents, patents in process, and
 //  are protected by trade secret or copyright law.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 @class PTDiffusionCredentials;
 @class PTDiffusionHTTPProxyConfiguration;
+@class PTDiffusionRetryStrategy;
 
 @protocol PTDiffusionSessionReconnectionStrategy;
+@protocol PTDiffusionSessionStateChangeDelegate;
 
 extern const NSTimeInterval PTDiffusionSessionDefaultReconnectionTimeout;
 
+
 NS_ASSUME_NONNULL_BEGIN
+
 
 /**
  @brief A session configuration defines behavior and policies to use when connecting to Diffusion.
@@ -29,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
  @since 5.6
  */
 @interface PTDiffusionSessionConfiguration : NSObject <NSCopying, NSMutableCopying>
+
 
 /**
  Returns a session configuration object initialized with the given principal and credentials.
@@ -47,6 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(instancetype)initWithPrincipal:(nullable NSString *)principal
                      credentials:(nullable PTDiffusionCredentials *)credentials;
 
+
 /**
  The security principal to use when opening the session.
  
@@ -57,6 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, nullable, readonly, copy) NSString *principal;
 
+
 /**
  The security credentials to use when opening the session.
  
@@ -65,6 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
  @since 5.6
  */
 @property(nonatomic, nullable, readonly, copy) PTDiffusionCredentials *credentials;
+
 
 /**
  The reconnection timeout in seconds that will be used on connection failure.
@@ -77,6 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, nullable, readonly) NSNumber* reconnectionTimeout;
 
+
 /**
  The reconnection strategy that will be used on connection failure.
  
@@ -86,6 +95,20 @@ NS_ASSUME_NONNULL_BEGIN
  @since 5.6
  */
 @property(nonatomic, nullable, readonly) id<PTDiffusionSessionReconnectionStrategy> reconnectionStrategy;
+
+
+/**
+ The initial retry strategy.
+
+ The strategy will determine whether a failure to open a session due to a SessionEstablishmentTransientException
+ should be retried and if so, at what interval and for how many attempts.
+
+ If no initial retry strategy is set, there will be no attempt to retry after such failure.
+
+ @since 6.9
+ */
+@property(nonatomic, nullable, readonly) PTDiffusionRetryStrategy* initialRetryStrategy;
+
 
 /**
  The default recovery buffer size in messages.
@@ -115,6 +138,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, readonly) NSUInteger recoveryBufferSize;
 
+
 /**
  The default connection timeout (2 seconds).
 
@@ -123,6 +147,7 @@ NS_ASSUME_NONNULL_BEGIN
  @since 5.7
  */
 +(NSTimeInterval)defaultConnectionTimeout;
+
 
 /**
  The lowest value that the maximum message size can be set to in bytes.
@@ -134,6 +159,7 @@ NS_ASSUME_NONNULL_BEGIN
  @since 6.0
  */
 +(NSUInteger)maximumMessageSizeMinimum;
+
 
 /**
  The default maximum message size in bytes.
@@ -150,6 +176,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 +(NSUInteger)defaultMaximumMessageSize;
 
+
 /**
  The default maximum outbound queue size in messages.
 
@@ -160,6 +187,7 @@ NS_ASSUME_NONNULL_BEGIN
  @since 6.0
  */
 +(NSUInteger)defaultMaximumQueueSize;
+
 
 /**
  The maximum message size in bytes.
@@ -174,6 +202,7 @@ NS_ASSUME_NONNULL_BEGIN
  @since 6.0
  */
 @property(nonatomic, readonly) NSUInteger maximumMessageSize;
+
 
 /**
  The maximum size of the outbound message queue for the connection.
@@ -196,6 +225,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, readonly) NSUInteger maximumQueueSize;
 
+
 /**
  The connection timeout.
  
@@ -206,6 +236,7 @@ NS_ASSUME_NONNULL_BEGIN
  @since 5.7
  */
 @property(nonatomic, readonly) NSTimeInterval connectionTimeout;
+
 
 /**
  Security settings to be applied to the underlying transport streams for SSL/TLS
@@ -229,6 +260,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, nullable, readonly, copy) NSDictionary* sslOptions;
 
+
 /**
  User-defined @ref md_session_properties "session properties".
 
@@ -243,6 +275,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, nullable, readonly, copy) NSDictionary<NSString *, NSString *>* properties;
 
+
 /**
  Configuration of the HTTP Proxy that should be used to make connections to the server.
  
@@ -255,6 +288,15 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, nullable, readonly, copy) PTDiffusionHTTPProxyConfiguration* httpProxyConfiguration;
 
+
+/**
+ The optional listener interface for a session which may be used to receive state notifications.
+
+ @since 6.11
+ */
+@property(nonatomic, nullable, readonly) id<PTDiffusionSessionStateChangeDelegate> sessionStateListener;
+
+
 /**
  Compares the receiver to the given session configuration.
 
@@ -266,7 +308,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 -(BOOL)isEqualToSessionConfiguration:(nullable PTDiffusionSessionConfiguration *)sessionConfiguration;
 
+
 @end
+
+
+
 
 /**
  @brief A mutable session configuration can be modified prior to being used to define
@@ -286,6 +332,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, nullable, readwrite, copy) NSString *principal;
 
+
 /**
  The security credentials to use when opening the session.
 
@@ -294,6 +341,7 @@ NS_ASSUME_NONNULL_BEGIN
  @since 5.6
  */
 @property(nonatomic, nullable, readwrite, copy) PTDiffusionCredentials *credentials;
+
 
 /**
  The reconnection timeout in seconds that will be used on connection failure.
@@ -316,6 +364,20 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, nullable, readwrite) id<PTDiffusionSessionReconnectionStrategy> reconnectionStrategy;
 
+
+/**
+ The initial retry strategy.
+
+ The strategy will determine whether a failure to open a session due to a SessionEstablishmentTransientException
+ should be retried and if so, at what interval and for how many attempts.
+
+ If no initial retry strategy is set, there will be no attempt to retry after such failure.
+
+ @since 6.9
+ */
+@property(nonatomic, nullable, readwrite) PTDiffusionRetryStrategy* initialRetryStrategy;
+
+
 /**
  The recovery buffer size in messages; can be zero.
 
@@ -333,6 +395,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, readwrite) NSUInteger recoveryBufferSize;
 
+
 /**
  The maximum message size in bytes.
 
@@ -349,6 +412,7 @@ NS_ASSUME_NONNULL_BEGIN
  @since 6.0
  */
 @property(nonatomic, readwrite) NSUInteger maximumMessageSize;
+
 
 /**
  The maximum size of the outbound message queue for the connection.
@@ -371,6 +435,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, readwrite) NSUInteger maximumQueueSize;
 
+
 /**
  The connection timeout.
 
@@ -386,6 +451,7 @@ NS_ASSUME_NONNULL_BEGIN
  @since 5.7
  */
 @property(nonatomic, readwrite) NSTimeInterval connectionTimeout;
+
 
 /**
  Security settings to be applied to the underlying transport streams for SSL/TLS
@@ -408,6 +474,7 @@ NS_ASSUME_NONNULL_BEGIN
  @since 5.7.1
  */
 @property(nonatomic, nullable, readwrite, copy) NSDictionary* sslOptions;
+
 
 /**
  User-defined @ref md_session_properties "session properties".
@@ -435,6 +502,16 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, nullable, readwrite, copy) PTDiffusionHTTPProxyConfiguration* httpProxyConfiguration;
 
+
+/**
+ The optional listener interface for a session which may be used to receive state notifications.
+
+ @since 6.11
+ */
+@property(nonatomic, nullable, readwrite) id<PTDiffusionSessionStateChangeDelegate> sessionStateListener;
+
+
 @end
+
 
 NS_ASSUME_NONNULL_END

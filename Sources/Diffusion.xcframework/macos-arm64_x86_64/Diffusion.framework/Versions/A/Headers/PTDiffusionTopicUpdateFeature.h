@@ -1,19 +1,20 @@
 //  Diffusion Client Library for iOS, tvOS and OS X / macOS
 //
-//  Copyright (c) 2019 Push Technology Ltd., All Rights Reserved.
+//  Copyright (c) 2019 - 2023 DiffusionData Ltd., All Rights Reserved.
 //
-//  Use is subject to license terms.
+//  Use is subject to licence terms.
 //
 //  NOTICE: All information contained herein is, and remains the
-//  property of Push Technology. The intellectual and technical
-//  concepts contained herein are proprietary to Push Technology and
+//  property of DiffusionData. The intellectual and technical
+//  concepts contained herein are proprietary to DiffusionData and
 //  may be covered by U.S. and Foreign Patents, patents in process, and
 //  are protected by trade secret or copyright law.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 #import <Diffusion/PTDiffusionFeature.h>
 #import <Diffusion/PTDiffusionUpdateConstraint.h>
 #import <Diffusion/PTDiffusionJSONPatchResult.h>
+#import <Diffusion/PTDiffusionUpdateStreamBuilder.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -27,11 +28,12 @@ NS_ASSUME_NONNULL_BEGIN
 
  ### Update streams
 
- An update stream is created for a specific topic. The type of the topic must
- match the type of values passed to the update stream. An update stream can be
- used to send any number of updates. It sends a sequence of updates for a
- specific topic to the server. If supported by the data type, updates will be
- sent to the server as a stream of binary deltas.
+ An update stream is created for a specific topic. An update stream builder
+ can be obtained using the PTDiffusionTopicUpdateFeature#newUpdateStreamBuilder
+ method. The type of the topic must match the type of values passed to the
+ update stream. An update stream can be used to send any number of updates.
+ It sends a sequence of updates for a specific topic to the server. If supported
+ by the data type, updates will be sent to the server as a stream of binary deltas.
 
  Update streams have additional ways of failing compared to stateless set
  operations but when used repeatedly have lower overheads. This is because
@@ -46,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
  performed by the update stream will complete with an 'invalid update stream'
  error.
 
- Applications can chose to use collaborative locking to coordinate exclusive
+ Applications can choose to use collaborative locking to coordinate exclusive
  access to a topic. To follow this pattern acquire a PTDiffusionSessionLock and
  use it with a PTDiffusionUpdateConstraint#lockedWithLock: constraint.
  The application is responsible for designing a locking scheme which determines
@@ -54,18 +56,6 @@ NS_ASSUME_NONNULL_BEGIN
  parts of the application that update the topic follow this scheme. Lock
  constraints and an application locking scheme can also ensure a sequence of set
  operations has exclusive access to the topic.
-
- ### Constraints
-
- Constraints can be applied to the setting of a value and creation of an update
- stream. Constraints describe a condition that must be satisfied for the
- operation to succeed. The constraints are evaluated on the server. The
- available constraints are:
-
- - an active session lock
- - the absence of a topic
- - the current value of the topic being updated
- - a part of the current value of the topic being updated
 
  ### Removing values
 
@@ -108,6 +98,18 @@ NS_ASSUME_NONNULL_BEGIN
  */
 
 @interface PTDiffusionTopicUpdateFeature : PTDiffusionFeature
+
+
+/**
+ Builder for {@link PTDiffusionUpdateStream update stream} to use for updating a
+ specific topic.
+
+ The type of the topic being updated must match the type of the created update stream.
+
+ @since 6.9
+ */
+- (PTDiffusionUpdateStreamBuilder *)newUpdateStreamBuilder;
+
 
 /**
  Applies a JSON Patch to a JSON topic.

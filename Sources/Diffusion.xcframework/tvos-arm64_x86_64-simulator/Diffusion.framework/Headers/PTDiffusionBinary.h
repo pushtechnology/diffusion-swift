@@ -1,22 +1,23 @@
 //  Diffusion Client Library for iOS, tvOS and OS X / macOS
 //
-//  Copyright (c) 2016, 2021 Push Technology Ltd., All Rights Reserved.
+//  Copyright (c) 2016 - 2023 DiffusionData Ltd., All Rights Reserved.
 //
-//  Use is subject to license terms.
+//  Use is subject to licence terms.
 //
 //  NOTICE: All information contained herein is, and remains the
-//  property of Push Technology. The intellectual and technical
-//  concepts contained herein are proprietary to Push Technology and
+//  property of DiffusionData. The intellectual and technical
+//  concepts contained herein are proprietary to DiffusionData and
 //  may be covered by U.S. and Foreign Patents, patents in process, and
 //  are protected by trade secret or copyright law.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 #import <Diffusion/PTDiffusionBytes.h>
 #import <Diffusion/PTDiffusionFetchRequest.h>
 #import <Diffusion/PTDiffusionMessagingFeature.h>
 #import <Diffusion/PTDiffusionResponder.h>
 #import <Diffusion/PTDiffusionTimeSeriesFeature.h>
 #import <Diffusion/PTDiffusionTopicUpdateFeature.h>
+#import <Diffusion/PTDiffusionPartialJSONUpdateConstraint.h>
 
 @class PTDiffusionBinaryDelta;
 @class PTDiffusionBinaryFetchResult;
@@ -33,6 +34,7 @@
 @class PTDiffusionTopicSpecification;
 @class PTDiffusionUpdateConstraint;
 @class PTDiffusionValueStream;
+@class PTDiffusionUpdateConstraintOperator;
 
 @protocol PTDiffusionBinaryRequestDelegate;
 @protocol PTDiffusionBinaryRequestStreamDelegate;
@@ -109,9 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  Use PTDiffusionUpdateConstraint#noValue to check if the topic has no value.
 
- This constraint is useful when changing the value of a topic. It is unsatisfied
- if no topic is present at the path, making it unsuitable for operations that
- try to add topics.
+ This constraint is unsatisfied if no topic is present at the path.
 
  @since 6.3
  */
@@ -687,6 +687,45 @@ NS_ASSUME_NONNULL_BEGIN
                                                   constraint:(PTDiffusionUpdateConstraint *)constraint;
 
 @end
+
+
+
+/**
+ @brief Extension adding support to partial JSON update constraints for
+ requiring primitive values at locations referenced with a JSON pointer.
+
+ @since 6.10
+ */
+@interface PTDiffusionPartialJSONUpdateConstraint (PTDiffusionBinary)
+
+
+/**
+ Compares a location within the JSON topic value to a specified value.
+
+ If there is no value found at the specified pointer position, the
+ constraint will be unsatisfied.
+
+ Only the operator {@link PTDiffusionUpdateConstraintOperator#is IS})
+ can be used with binary values.
+
+ @param value               The value to be compared against the topic value.
+ @param pointer             A {@link https://tools.ietf.org/html/rfc6901 JSON Pointer) syntax
+                            reference locating the value in the JSON object.
+ @param comparisonOperator  The comparison operator. See {@link PTDiffusionUpdateConstraintOperator}.
+ @param error               Location to store a reason in case of failure. May be `nil`.
+
+ @return                    The new constraint, or `nil` on failure.
+
+ @since 6.10
+ */
+-(nullable instancetype)withBinaryValue:(nonnull NSData *)value
+                              atPointer:(nonnull NSString *)pointer
+                     comparisonOperator:(nonnull PTDiffusionUpdateConstraintOperator *)comparisonOperator
+                                  error:(NSError *__autoreleasing *const)error;
+
+
+@end
+
 
 NS_ASSUME_NONNULL_END
 

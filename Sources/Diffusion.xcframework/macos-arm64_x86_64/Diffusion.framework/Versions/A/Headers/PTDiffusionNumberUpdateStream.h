@@ -1,16 +1,16 @@
 //  Diffusion Client Library for iOS, tvOS and OS X / macOS
 //
-//  Copyright (c) 2019, 2021 Push Technology Ltd., All Rights Reserved.
+//  Copyright (c) 2019 - 2023 DiffusionData Ltd., All Rights Reserved.
 //
-//  Use is subject to license terms.
+//  Use is subject to licence terms.
 //
 //  NOTICE: All information contained herein is, and remains the
-//  property of Push Technology. The intellectual and technical
-//  concepts contained herein are proprietary to Push Technology and
+//  property of DiffusionData. The intellectual and technical
+//  concepts contained herein are proprietary to DiffusionData and
 //  may be covered by U.S. and Foreign Patents, patents in process, and
 //  are protected by trade secret or copyright law.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 #import <Diffusion/PTDiffusionUpdateStream.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @since 6.3
  */
-@interface PTDiffusionNumberUpdateStream : PTDiffusionUpdateStream
+@interface PTDiffusionNumberUpdateStream : PTDiffusionUpdateStream<NSNumber *>
 
 /**
  The latest value of the topic set using this update stream, from local cache.
@@ -74,8 +74,6 @@ NS_ASSUME_NONNULL_BEGIN
  - **unsatisfied constraint** if the `constraint` is not  satisfied by the topic
  `path`.
  - **invalid update stream** if the update stream has been invalidated.
- - **incompatible parent topic** if a topic could not be added because a topic
-   at a parent path is incompatible.
  - **invalid topic path** if `path` is not a valid topic path.
  - **invalid topic specification** if the specification is invalid, possibly
    because mandatory properties were not supplied.
@@ -104,7 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
  @since 6.3
  */
 -(BOOL)      setValue:(nullable NSNumber *)value
-    completionHandler:(void (^)(PTDiffusionTopicCreationResult * _Nullable result, NSError * _Nullable error))completionHandler
+    completionHandler:(PTDiffusionUpdateStreamHandlerBlock)completionHandler
                 error:(NSError **)error;
 
 @end

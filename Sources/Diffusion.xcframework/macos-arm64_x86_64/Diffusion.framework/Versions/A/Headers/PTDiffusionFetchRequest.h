@@ -1,16 +1,16 @@
 //  Diffusion Client Library for iOS, tvOS and OS X / macOS
 //
-//  Copyright (c) 2018, 2020 Push Technology Ltd., All Rights Reserved.
+//  Copyright (c) 2018 - 2023 DiffusionData Ltd., All Rights Reserved.
 //
-//  Use is subject to license terms.
+//  Use is subject to licence terms.
 //
 //  NOTICE: All information contained herein is, and remains the
-//  property of Push Technology. The intellectual and technical
-//  concepts contained herein are proprietary to Push Technology and
+//  property of DiffusionData. The intellectual and technical
+//  concepts contained herein are proprietary to DiffusionData and
 //  may be covered by U.S. and Foreign Patents, patents in process, and
 //  are protected by trade secret or copyright law.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 @class PTDiffusionFetchResult;
 
@@ -85,9 +85,6 @@ NS_ASSUME_NONNULL_BEGIN
  specifying a limit to the number of results using #last:. This returns up to
  the specified number of results from the end of the range, in path order. This
  is useful for paging backwards through a range of topics.
-
- Routing topics are **not** supported, and if encountered will be ignored (i.e.
- treated as if they did not exist).
 
  Instances of this class are immutable and can be safely shared and reused.
 
@@ -303,8 +300,6 @@ NS_ASSUME_NONNULL_BEGIN
  If already constraining by value data type then the topic types specified here
  must be compatible with the value class specified or the event type for time
  series topics.
-
- PTDiffusionTopicType_Routing may not be specified.
 
  @param topicTypes Topic types to be selected, boxed as NSNumber instances.
 

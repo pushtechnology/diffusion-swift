@@ -1,16 +1,16 @@
 //  Diffusion Client Library for iOS, tvOS and OS X / macOS
 //
-//  Copyright (c) 2021 Push Technology Ltd., All Rights Reserved.
+//  Copyright (c) 2021 - 2023 DiffusionData Ltd., All Rights Reserved.
 //
-//  Use is subject to license terms.
+//  Use is subject to licence terms.
 //
 //  NOTICE: All information contained herein is, and remains the
-//  property of Push Technology. The intellectual and technical
-//  concepts contained herein are proprietary to Push Technology and
+//  property of DiffusionData. The intellectual and technical
+//  concepts contained herein are proprietary to DiffusionData and
 //  may be covered by U.S. and Foreign Patents, patents in process, and
 //  are protected by trade secret or copyright law.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 #import <Diffusion/PTDiffusionMetricCollector.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -47,6 +47,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ Indicates whether the collector groups by topic view.
+
+ @since 6.9
+ */
+@property(nonatomic, readonly) BOOL groupsByTopicView;
+
+
+/**
  @brief The number of leading parts of the topic path to group by.
 
  The number of leading parts of the topic pathh to group by,
@@ -55,6 +63,9 @@ NS_ASSUME_NONNULL_BEGIN
  @since 6.8
  */
 @property(nonatomic, readonly) NSInteger groupByPathPrefixParts;
+
+
+
 
 
 @end
