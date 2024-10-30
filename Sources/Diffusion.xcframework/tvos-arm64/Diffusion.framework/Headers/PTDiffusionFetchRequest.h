@@ -254,7 +254,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return A new fetch request derived from this fetch request but selecting only
  the number of topics specified from the end of the range.
 
- @exception NSInvalidArgumentException if number is greater than `-INT32_MIN`.
+ @exception NSInvalidArgumentException if number is greater than `INT32_MAX`.
 
  @since 6.2
  */
