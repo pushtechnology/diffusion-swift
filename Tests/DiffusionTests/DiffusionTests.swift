@@ -2,14 +2,11 @@ import XCTest
 @testable import Diffusion
 
 final class DiffusionTests: XCTestCase {
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        XCTAssertEqual(Diffusion().text, "Hello, World!")
-    }
+    func testExample() throws {
+        // XCTest Documentation
+        // https://developer.apple.com/documentation/xctest
 
-    static var allTests = [
-        ("testExample", testExample),
-    ]
+        // Defining Test Cases and Test Methods
+        // https://developer.apple.com/documentation/xctest/defining_test_cases_and_test_methods
+    }
 }
